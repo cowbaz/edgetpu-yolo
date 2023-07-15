@@ -1,12 +1,17 @@
-[TOC]
-
 ## Introduction
 
-In this repository we'll explore how to run a state-of-the-art object detection mode, [Yolov5](https://github.com/ultralytics/yolov5), on the [Google Coral EdgeTPU](coral.ai/). 
+In this repository we'll explore how to deploy the state-of-the-art object detection mode, [Yolov5](https://github.com/ultralytics/yolov5), on the Pi 4B with Rasberry Pi camera module with [Google Coral USB EdgeTPU](coral.ai/), to perform real time object detection and output the detection results, including the images with bounding boxes and summary of annotations.
 
-This project was submitted to, and won, Ultralytic's competition for edge device deployment in the EdgeTPU category. The notes for the competition are at the bottom of this file, for reference.
+This project was built upon the won, Ultralytic's competition for edge device deployment in the EdgeTPU category. The notes for the competition are at the bottom of this file, for reference. We have developed a flowchart with states outling the logic of object detection in real time (see Object_Detection_FlowChart.jpg). Below are the implementation:
 
-Probably the most interesting aspect for people stumbling across this is that this project requires very few runtime dependencies (it doesn't even need PyTorch). It contains comprehensive benchmarking code, examples of how to compile and run a custom model on the EdgeTPU and a discussion of how to test on real edge hardware.
+main.py (new):  the declaration of states, tfedgetu models and the loop for object detection
+motion_detection.py (new): initialization and configuration of Pi camera module, as well as the motion detection and ndarray image capture functions
+object_detecting.py (new): function for converting the ndarray image into opencv format for object detection of result output
+object_detected.py (new): function for converting the detection result into annotations (csv)
+utils.py (amended): get_image_ndarray_tensor() is added to read ndarray image instead of image file
+edgetpumodel (amended): process_predictions() and predict() are amended
+
+For application of docker, setup and etc., you may refer to previous works described below:
 
 **TL;DR (see the Dockerfile):**
 
